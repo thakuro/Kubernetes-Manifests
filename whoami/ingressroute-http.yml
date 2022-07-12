@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: whoami
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`www.this-is-the-test-domain.com`) && PathPrefix(`/whoami`)
+    kind: Rule
+    middlewares:
+      - name: redirect-to-https
+        namespace: default
+    services:
+    - name: whoami
+      port: 80
